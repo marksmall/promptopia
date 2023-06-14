@@ -14,10 +14,16 @@ import { Prompt } from "~/models/prompt";
 
 export type Props = {
   prompt: Prompt;
-  handleTagClick: (tag: string) => void;
+  handleTagClick?: (tag: string) => void;
+  handleEdit?: (prompt: ProfilePrompt) => void;
+  handleDelete?: (prompt: ProfilePrompt) => void;
 };
 
-const PromptCard: FC<Props> = ({ prompt, handleTagClick }) => {
+const PromptCard: FC<Props> = ({ prompt, handleTagClick, handleEdit, handleDelete }) => {
+  const { data: session } = useSession();
+  const router = useRouter();
+  const pathName = usePathname();
+
   const [copied, setCopied] = useState("");
 
   const handleCopy = () => {
@@ -66,6 +72,18 @@ const PromptCard: FC<Props> = ({ prompt, handleTagClick }) => {
       >
         {prompt.tag}
       </p>
+
+      {session?.user.id === prompt.creator._id && pathName === "/profile" ? (
+        <div className="mt-5 flex-center gap-4 border-t border-gray-100 pt-3">
+          <p className="font-inter text-sm green_gradient cursor-pointer" onClick={handleEdit}>
+            Edit
+          </p>
+
+          <p className="font-inter text-sm orange_gradient cursor-pointer" onClick={handleDelete}>
+            Delete
+          </p>
+        </div>
+      ) : null}
     </div>
   );
 };

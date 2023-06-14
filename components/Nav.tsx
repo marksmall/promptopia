@@ -15,6 +15,7 @@ const Nav = () => {
     LiteralUnion<BuiltInProviderType, string>,
     ClientSafeProvider
   > | null>(null);
+  const [toggleDropdown, setToggleDropdown] = useState(false);
 
   useEffect(() => {
     const updateProviders = async () => {
@@ -38,14 +39,29 @@ const Nav = () => {
       <div className="sm:flex hidden">
         {session?.user ? (
           <div className="flex gap-3 md:gap-5">
+            <Link href="/create-prompt" className="black_btn">
+              Create Post
+            </Link>
+
             <button type="button" className="outline_btn" onClick={() => signOut()}>
               Sign Out
             </button>
+
+            <Link href="/profile">
+              <Image
+                src={session.user ? (session.user.image as string) : "/assets/images/logo.svg"}
+                width={37}
+                height={377}
+                className="rounded-full"
+                alt="Profile"
+              />
+            </Link>
 
             <button
               type="button"
               className="mt-5 w-full black_btn"
               onClick={() => {
+                setToggleDropdown(false);
                 signOut();
               }}
             >
@@ -75,7 +91,20 @@ const Nav = () => {
               height={37}
               alt="Profile"
               className="rounded-full"
+              onClick={() => setToggleDropdown((prev) => !prev)}
             />
+
+            {toggleDropdown ? (
+              <div className="dropdown">
+                <Link href="/profile" onClick={() => setToggleDropdown(false)} className="dropdown_link">
+                  My Profile
+                </Link>
+
+                <Link href="/create-prompt" onClick={() => setToggleDropdown(false)} className="dropdown_link">
+                  Create Prompt
+                </Link>
+              </div>
+            ) : null}
           </div>
         ) : (
           <>
