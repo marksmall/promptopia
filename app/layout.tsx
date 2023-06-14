@@ -1,4 +1,5 @@
 import { FC, ReactNode } from "react";
+import Provider from "~/components/Provider";
 import "~/styles/globals.css";
 
 export const metadata = {
@@ -13,13 +14,15 @@ type Props = {
 const RootLayout: FC<Props> = ({ children }) => (
   <html lang="en">
     <body>
-      <div className="main">
-        <div className="gradient" />
-      </div>
+      <Provider>
+        <div className="main">
+          <div className="gradient" />
+        </div>
 
-      <main className="app">
-        {children}
-      </main>
+        <main className="app">
+          {children}
+        </main>
+      </Provider>
     </body>
   </html>
 );
