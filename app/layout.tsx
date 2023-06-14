@@ -1,4 +1,5 @@
 import { FC, ReactNode } from "react";
+import Nav from "~/components/Nav";
 import Provider from "~/components/Provider";
 import "~/styles/globals.css";
 
@@ -20,6 +21,8 @@ const RootLayout: FC<Props> = ({ children }) => (
         </div>
 
         <main className="app">
+          <Nav />
+
           {children}
         </main>
       </Provider>
